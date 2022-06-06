@@ -2,7 +2,24 @@
 
 include 'config.php';
 
+$productname = $_POST['product_name'];
+$productprice = $_POST['product_price'];
+$productimage = $_FILES['product_image']['name'];
+$productimage_tmp = $_FILES['product_image']['tmp_name'];
+$productimg_folder = "uploaded/".$productimage;
 
+if(empty($productname) || empty($productprice) || empty($productimage)) {
+    $message[] =  "Please fill out all the information";
+} else {
+    $update = "Update products set name='$productname',price='$productprice',image='$productimage'";
+    $query = mysqli_query($conn,$update);
+    if($query) {
+        move_uploaded_file($productimage_tmp,$productimg_folder);
+        $message[] = "Product updated successfully";
+    } else {
+        $message[] = "Could not update product";
+    }
+}
 
 ?>
 
