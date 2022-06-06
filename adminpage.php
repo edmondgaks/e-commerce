@@ -21,7 +21,6 @@ if(isset($_POST['add_product'])) {
             $message[] = 'could not add product';
         }
     }
-    
 }
 
 if(isset($_GET['delete'])) {
@@ -83,7 +82,7 @@ if(isset($_GET['delete'])) {
                         <td><?php echo $row['name']; ?></td>
                         <td><?php echo $row['price']; ?></td>
                         <td>
-                            <a href="adminpage.php?edit=<?php echo $row['id']; ?>" class="btn">Edit</a>
+                            <a href="adminupdate.php?edit=<?php echo $row['id']; ?>" class="btn">Edit</a>
                             <a href="adminpage.php?delete=<?php echo $row['id']; ?>" class="btn">Delete</a>
                         </td>
                     </tr>

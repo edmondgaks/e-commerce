@@ -2,23 +2,26 @@
 
 include 'config.php';
 
-$productname = $_POST['product_name'];
-$productprice = $_POST['product_price'];
-$productimage = $_FILES['product_image']['name'];
-$productimage_tmp = $_FILES['product_image']['tmp_name'];
-$productimg_folder = "uploaded/".$productimage;
-
-if(empty($productname) || empty($productprice) || empty($productimage)) {
-    $message[] =  "Please fill out all the information";
-} else {
-    $update = "Update products set name='$productname',price='$productprice',image='$productimage'";
-    $query = mysqli_query($conn,$update);
-    if($query) {
-        move_uploaded_file($productimage_tmp,$productimg_folder);
-        $message[] = "Product updated successfully";
+if(isset($_POST['submit'])) {
+    $productname = $_POST['product_name'];
+    $productprice = $_POST['product_price'];
+    $productimage = $_FILES['product_image']['name'];
+    $productimage_tmp = $_FILES['product_image']['tmp_name'];
+    $productimg_folder = "uploaded/".$productimage;
+    
+    if(empty($productname) || empty($productprice) || empty($productimage)) {
+        $message[] =  "Please fill out all the information";
     } else {
-        $message[] = "Could not update product";
+        $update = "Update products set name='$productname',price='$productprice',image='$productimage'";
+        $query = mysqli_query($conn,$update);
+        if($query) {
+            move_uploaded_file($productimage_tmp,$productimg_folder);
+            $message[] = "Product updated successfully";
+        } else {
+            $message[] = "Could not update product";
+        }
     }
+
 }
 
 ?>
@@ -40,7 +43,8 @@ if(empty($productname) || empty($productprice) || empty($productimage)) {
                 <input type="text" placeholder="Enter product name" name="product_name" class="box">
                 <input type="number" placeholder="Enter product price" name="product_price" class="box">
                 <input type="file" accept="image/png, image/jgp" name="product_image" class="box">
-                <input type="submit" class="btn" name="add_product" value="add a product">
+                <input type="submit" class="btn" name="add_product" value="Update a product">
+                <a href="adminpage.php" class="btn">Go back</a>
             </form>
         </div>
     </div>
